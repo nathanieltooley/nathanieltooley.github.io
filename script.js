@@ -1,4 +1,5 @@
 const canvas = document.getElementById('game');
+const scoreboard = document.getElementById('scoreboard')
 const context = canvas.getContext('2d');
 const grid = 15;
 const paddleHeight = grid * 5; // 80
@@ -44,6 +45,11 @@ const ball = {
   dy: -ballSpeed
 };
 
+const score = {
+    opposing: 0,
+    player: 0
+}
+
 // check for collision between two objects using axis-aligned bounding box (AABB)
 // @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 function collides(obj1, obj2) {
@@ -51,6 +57,11 @@ function collides(obj1, obj2) {
          obj1.x + obj1.width > obj2.x &&
          obj1.y < obj2.y + obj2.height &&
          obj1.y + obj1.height > obj2.y;
+}
+
+function writeScoreboard(){
+    let scoreboardString = `${score.opposing} : ${score.player}`;
+    scoreboard.innerText = scoreboardString;
 }
 
 // game loop
@@ -98,6 +109,17 @@ function loop() {
 
   // reset ball if it goes past paddle (but only if we haven't already done so)
   if ( (ball.x < 0 || ball.x > canvas.width) && !ball.resetting) {
+
+    if (ball.x < 0){
+        score.player += 1;
+    }
+
+    if (ball.x > canvas.width) {
+        score.opposing += 1;
+    }
+
+    writeScoreboard();
+
     ball.resetting = true;
 
     // give some time for the player to recover before launching the ball again

@@ -11,7 +11,7 @@ body {
     justify-content: center;
 }
 
-.scoreboard {
+#scoreboard {
     color: white;
     font-family: 'Lato', sans-serif;
 }
