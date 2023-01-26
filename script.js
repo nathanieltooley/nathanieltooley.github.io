@@ -17,6 +17,7 @@ const leftPaddle = {
   // paddle velocity
   dy: 0
 };
+
 const rightPaddle = {
   // start in the middle of the game on the right side
   x: canvas.width - grid * 3,
@@ -27,6 +28,7 @@ const rightPaddle = {
   // paddle velocity
   dy: 0
 };
+
 const ball = {
   // start in the middle of the game
   x: canvas.width / 2,
