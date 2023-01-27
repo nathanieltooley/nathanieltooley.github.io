@@ -14,7 +14,7 @@ body {
 .scoreboard-text {
     color: white;
     font-family: 'Lato', sans-serif;
-    flex-grow: 1;
+    flex-basis: 50%;
     text-align: center;
 }
 
