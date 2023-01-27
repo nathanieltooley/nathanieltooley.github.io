@@ -1,5 +1,9 @@
 const canvas = document.getElementById('game');
+
 const scoreboard = document.getElementById('scoreboard')
+const playerScoreboardText = document.getElementById('player-score');
+const opponentScoreboardText = document.getElementById('opponent-score')
+
 const context = canvas.getContext('2d');
 const grid = 15;
 const paddleHeight = grid * 5; // 80
@@ -46,7 +50,7 @@ const ball = {
 };
 
 const score = {
-    opposing: 0,
+    opponent: 0,
     player: 0
 }
 
@@ -60,8 +64,8 @@ function collides(obj1, obj2) {
 }
 
 function writeScoreboard(){
-    let scoreboardString = `${score.opposing} : ${score.player}`;
-    scoreboard.innerText = scoreboardString;
+  playerScoreboardText.innerText = score.player.toString();
+  opponentScoreboardText.innerHTML = score.opponent.toString();
 }
 
 // game loop
@@ -115,7 +119,7 @@ function loop() {
     }
 
     if (ball.x > canvas.width) {
-        score.opposing += 1;
+        score.opponent += 1;
     }
 
     writeScoreboard();
