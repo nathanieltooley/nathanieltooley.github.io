@@ -125,6 +125,13 @@ function loop() {
     writeScoreboard();
 
     ball.resetting = true;
+    
+    if (score.player == 7 || score.opponent == 7) {
+      score.player = 0;
+      score.opponent = 0; 
+      writeScoreboard();
+      ball.resetting = true;
+    }
 
     // give some time for the player to recover before launching the ball again
     setTimeout(() => {
@@ -177,13 +184,13 @@ document.addEventListener('keydown', function(e) {
   }
 
   // w key
-  if (e.which === 87) {
-    leftPaddle.dy = -paddleSpeed;
-  }
+  //if (e.which === 87) {
+  // leftPaddle.dy = -paddleSpeed;
+  // }
   // a key
-  else if (e.which === 83) {
-    leftPaddle.dy = paddleSpeed;
-  }
+  //else if (e.which === 83) {
+  //  leftPaddle.dy = paddleSpeed;
+  // }
 });
 
 // listen to keyboard events to stop the paddle if key is released
@@ -192,9 +199,9 @@ document.addEventListener('keyup', function(e) {
     rightPaddle.dy = 0;
   }
 
-  if (e.which === 83 || e.which === 87) {
-    leftPaddle.dy = 0;
-  }
+ // if (e.which === 83 || e.which === 87) {
+ //   leftPaddle.dy = 0;
+ // }
 });
 
 // start the game
