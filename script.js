@@ -134,13 +134,13 @@ function loop() {
 
     ball.resetting = true;
 
-    //reset if someone scores 7 points
-    if(score.player == 7 || score.opponent == 7) {
-      announceWinner(); 
-    }
-
     // give some time for the player to recover before launching the ball again
     setTimeout(() => {
+      //reset if someone scores 7 points
+      if(score.player == 7 || score.opponent == 7) {
+        announceWinner(); 
+      }
+
       ball.resetting = false;
       ball.x = canvas.width / 2;
       ball.y = canvas.height / 2;
