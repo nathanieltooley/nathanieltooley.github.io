@@ -73,9 +73,17 @@ function loop() {
   requestAnimationFrame(loop);
   context.clearRect(0,0,canvas.width,canvas.height);
 
-  // move paddles by their velocity
-  leftPaddle.y += leftPaddle.dy;
+  // move paddles by their  velocity
   rightPaddle.y += rightPaddle.dy;
+  leftPaddle.y += leftPaddle.dy;
+
+  //move left paddle by ball's velocity
+  if (ball.dy < 0) {
+    leftPaddle.dy = -paddleSpeed; 
+  }
+  else if (ball.dy >= 0) {
+    leftPaddle.dy = paddleSpeed; 
+  }
 
   // prevent paddles from going through walls
   if (leftPaddle.y < grid) {
@@ -125,12 +133,10 @@ function loop() {
     writeScoreboard();
 
     ball.resetting = true;
-    
-    if (score.player == 7 || score.opponent == 7) {
-      score.player = 0;
-      score.opponent = 0; 
-      writeScoreboard();
-      ball.resetting = true;
+
+    //reset if someone scores 7 points
+    if(score.player == 7 || score.opponent == 7) {
+      announceWinner(); 
     }
 
     // give some time for the player to recover before launching the ball again
@@ -141,6 +147,28 @@ function loop() {
     }, 400);
   }
 
+  function announceWinner() {
+    if(score.player == 7) {
+        window.alert("Game Over. \nYou won"); 
+    }
+
+    if(score.opponent == 7) {
+      window.alert("Game Over \nYou lost"); 
+    }
+    resetGame(); 
+  }
+
+  function resetGame() {
+    window.alert("Play again") 
+    resetScore();
+    writeScoreboard();
+  }
+  
+  function resetScore() {
+    score.player = 0;
+    score.opponent = 0; 
+  }
+  
   // check to see if ball collides with paddle. if they do change x velocity
   if (collides(ball, leftPaddle)) {
     ball.dx *= -1;
@@ -182,15 +210,15 @@ document.addEventListener('keydown', function(e) {
   else if (e.which === 40) {
     rightPaddle.dy = paddleSpeed;
   }
-
+ 
   // w key
   //if (e.which === 87) {
-  // leftPaddle.dy = -paddleSpeed;
-  // }
+    //leftPaddle.dy = -paddleSpeed;
+  //}
   // a key
   //else if (e.which === 83) {
-  //  leftPaddle.dy = paddleSpeed;
-  // }
+    //leftPaddle.dy = paddleSpeed;
+  //}
 });
 
 // listen to keyboard events to stop the paddle if key is released
@@ -199,9 +227,9 @@ document.addEventListener('keyup', function(e) {
     rightPaddle.dy = 0;
   }
 
- // if (e.which === 83 || e.which === 87) {
- //   leftPaddle.dy = 0;
- // }
+  //if (e.which === 83 || e.which === 87) {
+    //leftPaddle.dy = 0;
+  //}
 });
 
 // start the game
