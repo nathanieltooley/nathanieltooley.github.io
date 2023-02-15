@@ -54,17 +54,16 @@ const score = {
     player: 0
 }
 
+// Audio initalization
 const sfxVolume = .5;
 const musicVolume = .4;
 
 let gameMusic = new Audio("./assets/game-aranessa-loop.wav");
 let homeMusic = new Audio("./assets/home-aranessa-loop.wav");
 
-let paddleHit = new Audio("./assets/game-hit.mp3");
 let playerGoal = new Audio("./assets/game-player-goal.mp3");
 let enemyGoal = new Audio("./assets/game-enemy-goal.mp3");
 
-paddleHit.volume = sfxVolume;
 playerGoal.volume = sfxVolume;
 enemyGoal.volume = sfxVolume;
 
@@ -92,6 +91,16 @@ function collides(obj1, obj2) {
 function writeScoreboard(){
   playerScoreboardText.innerText = score.player.toString();
   opponentScoreboardText.innerHTML = score.opponent.toString();
+}
+
+// I factored this out to a seperate function because sometimes the ball would hit stuff very quickly
+// and the previous hit sound wasn't done playing so there would be silence. Now it just creates a new audio object
+// everytime it hits something
+function playHitSound(){
+  let paddleHit = new Audio("./assets/game-hit.mp3");
+
+  paddleHit.volume = sfxVolume;
+  paddleHit.play();
 }
 
 // game loop
@@ -222,7 +231,7 @@ function loop() {
   }
 
   if (ballHits) {
-    paddleHit.play();
+    playHitSound();
   }
 
   // draw ball
