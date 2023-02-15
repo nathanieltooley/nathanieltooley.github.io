@@ -54,6 +54,25 @@ const score = {
     player: 0
 }
 
+let gameMusic = new Audio("./assets/game-aranessa-loop.wav");
+
+let paddleHit = new Audio("./assets/game-hit.mp3");
+let playerGoal = new Audio("./assets/game-player-goal.mp3");
+let enemyGoal = new Audio("./assets/game-enemy-goal.mp3");
+
+paddleHit.volume = .5;
+playerGoal.volume = .5;
+enemyGoal.volume = .5;
+
+gameMusic.addEventListener("canplaythrough", (event) => {
+  gameMusic.autoplay = false;
+  gameMusic.loop = true;
+
+  gameMusic.volume = .4;
+
+  gameMusic.play()
+})
+
 // check for collision between two objects using axis-aligned bounding box (AABB)
 // @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 function collides(obj1, obj2) {
@@ -124,10 +143,12 @@ function loop() {
 
     if (ball.x < 0){
         score.player += 1;
+        playerGoal.play();
     }
 
     if (ball.x > canvas.width) {
         score.opponent += 1;
+        enemyGoal.play();
     }
 
     writeScoreboard();
@@ -169,6 +190,8 @@ function loop() {
     score.opponent = 0; 
   }
   
+  let ballHits = false;
+
   // check to see if ball collides with paddle. if they do change x velocity
   if (collides(ball, leftPaddle)) {
     ball.dx *= -1;
@@ -176,6 +199,7 @@ function loop() {
     // move ball next to the paddle otherwise the collision will happen again
     // in the next frame
     ball.x = leftPaddle.x + leftPaddle.width;
+    ballHits = true;
   }
   else if (collides(ball, rightPaddle)) {
     ball.dx *= -1;
@@ -183,6 +207,11 @@ function loop() {
     // move ball next to the paddle otherwise the collision will happen again
     // in the next frame
     ball.x = rightPaddle.x - ball.width;
+    ballHits = true;
+  }
+
+  if (ballHits) {
+    paddleHit.play();
   }
 
   // draw ball
@@ -231,6 +260,8 @@ document.addEventListener('keyup', function(e) {
     //leftPaddle.dy = 0;
   //}
 });
+
+
 
 // start the game
 requestAnimationFrame(loop);
