@@ -135,14 +135,18 @@ function loop() {
   ball.x += ball.dx;
   ball.y += ball.dy;
 
+  let ballHits = false;
+
   // prevent ball from going through walls by changing its velocity
   if (ball.y < grid) {
     ball.y = grid;
     ball.dy *= -1;
+    ballHits = true;
   }
   else if (ball.y + grid > canvas.height - grid) {
     ball.y = canvas.height - grid * 2;
     ball.dy *= -1;
+    ballHits = true;
   }
 
   // reset ball if it goes past paddle (but only if we haven't already done so)
@@ -197,7 +201,7 @@ function loop() {
     score.opponent = 0; 
   }
   
-  let ballHits = false;
+ 
 
   // check to see if ball collides with paddle. if they do change x velocity
   if (collides(ball, leftPaddle)) {
