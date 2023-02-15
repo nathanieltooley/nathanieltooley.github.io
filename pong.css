@@ -26,3 +26,18 @@ body {
     justify-content: center;
     width: 750px;
 }
+button.reset {
+    background-color: rgb(128, 161, 48); /* Green */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    width: 20%;
+    height: 8%;
+    color: black;
+    /* position: fixed;
+    margin-top: 70%; */
+    /* flex- */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+  }
