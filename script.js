@@ -54,22 +54,29 @@ const score = {
     player: 0
 }
 
+const sfxVolume = .5;
+const musicVolume = .4;
+
 let gameMusic = new Audio("./assets/game-aranessa-loop.wav");
+let homeMusic = new Audio("./assets/home-aranessa-loop.wav");
 
 let paddleHit = new Audio("./assets/game-hit.mp3");
 let playerGoal = new Audio("./assets/game-player-goal.mp3");
 let enemyGoal = new Audio("./assets/game-enemy-goal.mp3");
 
-paddleHit.volume = .5;
-playerGoal.volume = .5;
-enemyGoal.volume = .5;
+paddleHit.volume = sfxVolume;
+playerGoal.volume = sfxVolume;
+enemyGoal.volume = sfxVolume;
+
+gameMusic.autoplay = false;
+gameMusic.loop = true;
+gameMusic.volume = musicVolume;
+
+homeMusic.autoplay = false;
+homeMusic.loop = true;
+homeMusic.volume = musicVolume;
 
 gameMusic.addEventListener("canplaythrough", (event) => {
-  gameMusic.autoplay = false;
-  gameMusic.loop = true;
-
-  gameMusic.volume = .4;
-
   gameMusic.play()
 })
 
