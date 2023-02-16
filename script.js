@@ -143,7 +143,6 @@ function loop() {
     setTimeout(() => {
       //reset if someone scores 7 points UNCOMMENT
       if(score.player == 7 || score.opponent == 7) { 
-        
         announceWinner();  
       }
       ball.resetting = false;
@@ -153,7 +152,6 @@ function loop() {
   }
 //UNCOMMENT EVERYTHING BELOW TILL RESET SCORE()
   function announceWinner() {
-    
     let text = "Game over!\nEither Cancel or Ok to the reset game button to replay.";
     if (confirm(text) == true) {
       reset();
