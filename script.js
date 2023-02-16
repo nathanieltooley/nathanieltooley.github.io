@@ -58,8 +58,8 @@ const score = {
 const sfxVolume = .5;
 const musicVolume = .4;
 
-let gameMusic = new Audio("./assets/game-aranessa-loop.mp3");
-let homeMusic = new Audio("./assets/home-aranessa-loop.mp3");
+let gameMusic = new Audio("./assets/game-aranessa-loop.wav");
+let homeMusic = new Audio("./assets/home-aranessa-loop.wav");
 
 let playerGoal = new Audio("./assets/game-player-goal.mp3");
 let enemyGoal = new Audio("./assets/game-enemy-goal.mp3");
