@@ -11,6 +11,9 @@ body {
     justify-content: center;
 }
 
+
+
+
 .scoreboard-text {
     color: white;
     font-family: 'Lato', sans-serif;
@@ -20,7 +23,7 @@ body {
 
 #scoreboard {
     color: white;
-    background-color: rgb(36, 35, 35);
+    background:rgb(36, 35, 35);
     display: flex;
     flex-direction: row;
     justify-content: center;
