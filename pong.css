@@ -11,6 +11,9 @@ body {
     justify-content: center;
 }
 
+
+
+
 .scoreboard-text {
     color: white;
     font-family: 'Lato', sans-serif;
@@ -20,9 +23,24 @@ body {
 
 #scoreboard {
     color: white;
-    background-color: rgb(36, 35, 35);
+    background:rgb(36, 35, 35);
     display: flex;
     flex-direction: row;
     justify-content: center;
     width: 750px;
 }
+button.reset {
+    background-color: rgb(36, 35, 35);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    width: 20%;
+    height: 8%;
+    color: white;
+    /* position: fixed;
+    margin-top: 70%; */
+    /* flex- */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+  }
