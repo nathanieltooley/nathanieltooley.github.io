@@ -194,7 +194,6 @@ function loop() {
     if (confirm(text) == true) {
       reset();
     } else {
-      // context.fillText("GAME OVER",250,300);
       if(score.player == 7) {
         document.write("Game Over. \nYou won"); 
       }

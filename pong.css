@@ -30,13 +30,42 @@ button.reset {
     background-color: rgb(128, 161, 48); /* Green */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     border: none;
-    width: 20%;
-    height: 8%;
-    color: black;
-    /* position: fixed;
-    margin-top: 70%; */
-    /* flex- */
+    width: 15%;
+    height: 4%;
     text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+  }
+button.easy {
+    background-color: rgb(138, 72, 177);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    width: 15%;
+    height: 4%;
+    text-align:center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+  }
+  button.medium {
+    background-color: rgb(30, 156, 187);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    width: 15%;
+    height: 4%;
+    text-align:center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+  }
+  button.hard {
+    background-color: rgb(201, 98, 29);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    width: 15%;
+    height: 4%;
+    text-align:center;
     text-decoration: none;
     display: inline-block;
     font-size: 20px;
