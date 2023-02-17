@@ -76,6 +76,12 @@ function reset() {
   score.player = 0;
   score.opponent = 0;
   writeScoreboard();
+  ball.resetting = true;
+  setTimeout(() => {
+    ball.resetting = false;
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+  }, 0);
 }
 
 function writeScoreboard(){
@@ -175,12 +181,6 @@ function loop() {
     writeScoreboard();
   }
 
-  
-  function resetScore() {
-    score.player = 0;
-    score.opponent = 0; 
-  }
-  
   // check to see if ball collides with paddle. if they do change x velocity
   if (collides(ball, leftPaddle)) {
     ball.dx *= -1;
