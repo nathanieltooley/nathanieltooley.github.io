@@ -119,6 +119,8 @@ function playHitSound(){
 
 // game loop
 function loop() {
+  let ballHit = false;
+
   requestAnimationFrame(loop);
   context.clearRect(0,0,canvas.width,canvas.height);
 
@@ -162,19 +164,25 @@ function loop() {
   if (ball.y < grid) {
     ball.y = grid;
     ball.dy *= -1;
+
+    ballHit = true;
   }
   else if (ball.y + grid > canvas.height - grid) {
     ball.y = canvas.height - grid * 2;
     ball.dy *= -1;
+
+    ballHit = true;
   }
 
   // reset ball if it goes past paddle (but only if we haven't already done so)
   if ( (ball.x < 0 || ball.x > canvas.width) && !ball.resetting) {
     if (ball.x < 0){
         score.player += 1;
+        playerGoal.play();
     }
     if (ball.x > canvas.width) {
         score.opponent += 1;
+        enemyGoal.play();
     }
     writeScoreboard();
 
@@ -222,6 +230,7 @@ function loop() {
     // move ball next to the paddle otherwise the collision will happen again
     // in the next frame
     ball.x = leftPaddle.x + leftPaddle.width;
+    ballHit = true;
   }
   else if (collides(ball, rightPaddle)) {
     ball.dx *= -1;
@@ -229,10 +238,15 @@ function loop() {
     // move ball next to the paddle otherwise the collision will happen again
     // in the next frame
     ball.x = rightPaddle.x - ball.width;
+    ballHit = true;
   }
 
   // draw ball
   context.fillRect(ball.x, ball.y, ball.width, ball.height);
+
+  if (ballHit) {
+    playHitSound();
+  }
 
   // draw walls
   context.fillStyle = 'lightgrey';
