@@ -64,6 +64,30 @@ const score = {
     player: 0
 }
 
+const sfxVolume = .5;
+const musicVolume = .4;
+
+let gameMusic = new Audio("./assets/game-aranessa-loop.wav");
+let homeMusic = new Audio("./assets/home-aranessa-loop.wav");
+
+let playerGoal = new Audio("./assets/game-player-goal.mp3");
+let enemyGoal = new Audio("./assets/game-enemy-goal.mp3");
+
+playerGoal.volume = sfxVolume;
+enemyGoal.volume = sfxVolume;
+
+gameMusic.autoplay = false;
+gameMusic.loop = true;
+gameMusic.volume = musicVolume;
+
+homeMusic.autoplay = false;
+homeMusic.loop = true;
+homeMusic.volume = musicVolume;
+
+gameMusic.addEventListener("canplaythrough", (event) => {
+  gameMusic.play()
+})
+
 // check for collision between two objects using axis-aligned bounding box (AABB)
 // @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 function collides(obj1, obj2) {
