@@ -1,3 +1,13 @@
+//starts the game when the start button is clicked and then it disappears
+const startButton = document.getElementById("startButton");
+startButton.addEventListener("click", () => {
+  // hides welcome screen and makes way to show the canvas
+  const welcomeScreen = document.querySelector(".welcome-screen");
+  const canvas = document.querySelector("canvas");
+  //hides welcome screen while none and displays while block
+  welcomeScreen.style.display = "none";
+  canvas.style.display = "block";
+});
 const canvas = document.getElementById('game');
 
 const scoreboard = document.getElementById('scoreboard')
@@ -62,6 +72,11 @@ function collides(obj1, obj2) {
          obj1.y < obj2.y + obj2.height &&
          obj1.y + obj1.height > obj2.y;
 }
+function reset() {
+  score.player = 0;
+  score.opponent = 0;
+  writeScoreboard();
+}
 
 function writeScoreboard(){
   playerScoreboardText.innerText = score.player.toString();
@@ -121,48 +136,45 @@ function loop() {
 
   // reset ball if it goes past paddle (but only if we haven't already done so)
   if ( (ball.x < 0 || ball.x > canvas.width) && !ball.resetting) {
-
     if (ball.x < 0){
         score.player += 1;
     }
-
     if (ball.x > canvas.width) {
         score.opponent += 1;
     }
-
     writeScoreboard();
 
     ball.resetting = true;
 
     // give some time for the player to recover before launching the ball again
     setTimeout(() => {
-      //reset if someone scores 7 points
-      if(score.player == 7 || score.opponent == 7) {
-        announceWinner(); 
+      //reset if someone scores 7 points UNCOMMENT
+      if(score.player == 7 || score.opponent == 7) { 
+        announceWinner();  
       }
-
       ball.resetting = false;
       ball.x = canvas.width / 2;
       ball.y = canvas.height / 2;
     }, 400);
   }
-
+//UNCOMMENT EVERYTHING BELOW TILL RESET SCORE()
   function announceWinner() {
-    if(score.player == 7) {
-        window.alert("Game Over. \nYou won"); 
+    let text = "Game over!\nEither Cancel or Ok to the reset game button to replay.";
+    if (confirm(text) == true) {
+      reset();
+    } else {
+      if(score.player == 7) {
+        document.write("Game Over. \nYou won"); 
+      }
+      if(score.opponent == 7) {
+        // context.fillText("GAME OVER",250,300);
+        document.write("Game Over \nYou lost"); 
+      }
     }
-
-    if(score.opponent == 7) {
-      window.alert("Game Over \nYou lost"); 
-    }
-    resetGame(); 
-  }
-
-  function resetGame() {
-    window.alert("Play again") 
-    resetScore();
+    resetScore(); 
     writeScoreboard();
   }
+
   
   function resetScore() {
     score.player = 0;
