@@ -91,6 +91,21 @@ function writeScoreboard(){
   opponentScoreboardText.innerHTML = score.opponent.toString();
 }
 
+//Bot commands - Taitt Estes
+var difficulty = 1;
+function easy(){
+  difficulty = 0;
+  reset();
+}
+function medium(){
+  difficulty = 1;
+  reset();
+}
+function hard(){
+  difficulty = 2;
+  reset();
+}
+
 // game loop
 function loop() {
   requestAnimationFrame(loop);
@@ -101,11 +116,42 @@ function loop() {
   leftPaddle.y += leftPaddle.dy;
 
   //move left paddle by ball's velocity
-  if (ball.dy < 0) {
-    leftPaddle.dy = -paddleSpeed; 
-  }
-  else if (ball.dy >= 0) {
-    leftPaddle.dy = paddleSpeed; 
+  //Switch statement for Bot difficulties - Taitt Estes
+  switch(difficulty){
+    case 0:
+      //Easy(Slight Delay + Chance to Miscalculate)
+      let originalPos = leftPaddle.y;
+      if (ball.dy < 0) {
+        leftPaddle.dy = -paddleSpeed; 
+      }
+      else if (ball.dy > 0) {
+        leftPaddle.dy = paddleSpeed; 
+      }
+      if(Math.random() <= .125){
+        leftPaddle.y = originalPos;
+      }
+      break;
+    case 1:
+      //Medium (Slight Delay, Original Difficulty)
+      if (ball.dy < 0) {
+        leftPaddle.dy = -paddleSpeed; 
+      }
+      else if (ball.dy >= 0) {
+        leftPaddle.dy = paddleSpeed; 
+      }
+      break;
+    case 2:
+      //Hard (NO DELAY *WARNING MAY BE IMPOSSIBLE*)
+      if (leftPaddle.y > ball.y) {
+        leftPaddle.dy = -paddleSpeed; 
+      }
+      else if (leftPaddle.y < ball.y) {
+        leftPaddle.dy = paddleSpeed; 
+      }
+      break;
+    default:
+      //Needed Default Case.
+      break;
   }
 
   // prevent paddles from going through walls
