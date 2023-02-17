@@ -76,6 +76,7 @@ function reset() {
   score.player = 0;
   score.opponent = 0;
   writeScoreboard();
+
   ball.resetting = true;
 
   //Resets ball position when resetting - Taitt Estes
@@ -228,7 +229,6 @@ function loop() {
     resetScore(); 
     writeScoreboard();
   }
-
   // check to see if ball collides with paddle. if they do change x velocity
   if (collides(ball, leftPaddle)) {
     ball.dx *= -1;
