@@ -77,6 +77,8 @@ function reset() {
   score.opponent = 0;
   writeScoreboard();
   ball.resetting = true;
+
+  //Resets ball position when resetting - Taitt Estes
   setTimeout(() => {
     ball.resetting = false;
     ball.x = canvas.width / 2;
