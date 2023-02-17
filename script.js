@@ -107,6 +107,16 @@ function writeScoreboard(){
   opponentScoreboardText.innerHTML = score.opponent.toString();
 }
 
+// I factored this out to a seperate function because sometimes the ball would hit stuff very quickly
+// and the previous hit sound wasn't done playing so there would be silence. Now it just creates a new audio object
+// everytime it hits something
+function playHitSound(){
+  let paddleHit = new Audio("./assets/game-hit.mp3");
+
+  paddleHit.volume = sfxVolume;
+  paddleHit.play();
+}
+
 // game loop
 function loop() {
   requestAnimationFrame(loop);
