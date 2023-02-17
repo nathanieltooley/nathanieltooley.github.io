@@ -10,17 +10,43 @@ body {
     align-items: center;
     justify-content: center;
 }
+.welcome-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+button {
+  font-size: 60px;
+  padding: 2rem 4rem;
+  background-color: rgb(15, 209, 144);
+  /* background-color: #4CAF50; */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+button:hover {
+  background-color: rgb(36, 35, 35);
+  /* background-color: #39463a; */
+}
 
-
+canvas {
+  display: none;
+}
 .scoreboard-text {
     color: white;
     font-family: 'Lato', sans-serif;
     flex-basis: 50%;
     text-align: center;
 }
-
 #scoreboard {
     color: white;
     background:rgb(36, 35, 35);
@@ -30,46 +56,75 @@ body {
     width: 750px;
 }
 button.reset {
-    background-color: rgb(128, 161, 48); /* Green */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: none;
-    width: 15%;
-    height: 4%;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 1rem 2rem;
+    background-color: rgb(36, 35, 35);
+    width: 15%;
+    height: 7%;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 1rem;
   }
 button.easy {
-    background-color: rgb(138, 72, 177);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: none;
-    width: 15%;
-    height: 4%;
-    text-align:center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 1rem 2rem;
+    background-color: rgb(138, 72, 177);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 15%;
+    height: 7%;
+    margin: auto;
   }
   button.medium {
-    background-color: rgb(30, 156, 187);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: none;
-    width: 15%;
-    height: 4%;
-    text-align:center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 1rem 2rem;
+    background-color: rgb(30, 156, 187);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: auto;
+    width: 15%;
+    height: 7%;
   }
   button.hard {
-    background-color: rgb(201, 98, 29);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: none;
-    width: 15%;
-    height: 4%;
-    text-align:center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 1rem 2rem;
+    background-color: rgb(201, 98, 29);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: auto;
+    width: 15%;
+    height: 7%;
   }
+  .container {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  h1 {
+    font-size: 20px;
+    margin-bottom: auto;
+  }
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  button:hover {
+    background-color: #3e8e41;
+  }
+  
+  
+  
+  

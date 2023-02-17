@@ -1,9 +1,18 @@
+//starts the game when the start button is clicked and then it disappears
+const startButton = document.getElementById("startButton");
+startButton.addEventListener("click", () => {
+  // hides welcome screen and makes way to show the canvas
+  const welcomeScreen = document.querySelector(".welcome-screen");
+  const canvas = document.querySelector("canvas");
+  //hides welcome screen while none and displays while block
+  welcomeScreen.style.display = "none";
+  canvas.style.display = "block";
+});
 const canvas = document.getElementById('game');
 
 const scoreboard = document.getElementById('scoreboard')
 const playerScoreboardText = document.getElementById('player-score');
 const opponentScoreboardText = document.getElementById('opponent-score')
-
 
 const context = canvas.getContext('2d');
 const grid = 15;
@@ -55,31 +64,6 @@ const score = {
     player: 0
 }
 
-// Audio initalization
-const sfxVolume = .5;
-const musicVolume = .4;
-
-let gameMusic = new Audio("./assets/game-aranessa-loop.wav");
-let homeMusic = new Audio("./assets/home-aranessa-loop.wav");
-
-let playerGoal = new Audio("./assets/game-player-goal.mp3");
-let enemyGoal = new Audio("./assets/game-enemy-goal.mp3");
-
-playerGoal.volume = sfxVolume;
-enemyGoal.volume = sfxVolume;
-
-gameMusic.autoplay = false;
-gameMusic.loop = true;
-gameMusic.volume = musicVolume;
-
-homeMusic.autoplay = false;
-homeMusic.loop = true;
-homeMusic.volume = musicVolume;
-
-gameMusic.addEventListener("canplaythrough", (event) => {
-  gameMusic.play()
-})
-
 // check for collision between two objects using axis-aligned bounding box (AABB)
 // @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 function collides(obj1, obj2) {
@@ -99,20 +83,11 @@ function writeScoreboard(){
   opponentScoreboardText.innerHTML = score.opponent.toString();
 }
 
-// I factored this out to a seperate function because sometimes the ball would hit stuff very quickly
-// and the previous hit sound wasn't done playing so there would be silence. Now it just creates a new audio object
-// everytime it hits something
-function playHitSound(){
-  let paddleHit = new Audio("./assets/game-hit.mp3");
-
-  paddleHit.volume = sfxVolume;
-  paddleHit.play();
-}
-
 // game loop
 function loop() {
   requestAnimationFrame(loop);
   context.clearRect(0,0,canvas.width,canvas.height);
+
   // move paddles by their  velocity
   rightPaddle.y += rightPaddle.dy;
   leftPaddle.y += leftPaddle.dy;
@@ -149,33 +124,23 @@ function loop() {
   ball.x += ball.dx;
   ball.y += ball.dy;
 
-  let ballHits = false;
-
   // prevent ball from going through walls by changing its velocity
   if (ball.y < grid) {
     ball.y = grid;
     ball.dy *= -1;
-    ballHits = true;
   }
   else if (ball.y + grid > canvas.height - grid) {
     ball.y = canvas.height - grid * 2;
     ball.dy *= -1;
-    ballHits = true;
   }
 
   // reset ball if it goes past paddle (but only if we haven't already done so)
   if ( (ball.x < 0 || ball.x > canvas.width) && !ball.resetting) {
-
     if (ball.x < 0){
         score.player += 1;
-        document.body.style.background = 'rgb(115, 153, 0)';
-        
-        playerGoal.play();
     }
     if (ball.x > canvas.width) {
         score.opponent += 1;
-       document.body.style.background = 'rgb(255, 77, 77)';
-        enemyGoal.play();
     }
     writeScoreboard();
 
@@ -198,7 +163,6 @@ function loop() {
     if (confirm(text) == true) {
       reset();
     } else {
-      // context.fillText("GAME OVER",250,300);
       if(score.player == 7) {
         document.write("Game Over. \nYou won"); 
       }
@@ -217,8 +181,6 @@ function loop() {
     score.opponent = 0; 
   }
   
- 
-
   // check to see if ball collides with paddle. if they do change x velocity
   if (collides(ball, leftPaddle)) {
     ball.dx *= -1;
@@ -226,7 +188,6 @@ function loop() {
     // move ball next to the paddle otherwise the collision will happen again
     // in the next frame
     ball.x = leftPaddle.x + leftPaddle.width;
-    ballHits = true;
   }
   else if (collides(ball, rightPaddle)) {
     ball.dx *= -1;
@@ -234,11 +195,6 @@ function loop() {
     // move ball next to the paddle otherwise the collision will happen again
     // in the next frame
     ball.x = rightPaddle.x - ball.width;
-    ballHits = true;
-  }
-
-  if (ballHits) {
-    playHitSound();
   }
 
   // draw ball
@@ -287,8 +243,6 @@ document.addEventListener('keyup', function(e) {
     //leftPaddle.dy = 0;
   //}
 });
-
-
 
 // start the game
 requestAnimationFrame(loop);

@@ -11,13 +11,16 @@
         </style>
     </head>
     <body>
+        <div class="welcome-screen">
+            <button id="startButton">Start Game</button>
+        </div>
         <div id="scoreboard">
             <h1 class="scoreboard-text" id="opponent-score">0</h1>
             <h1 class="scoreboard-text" id="player-score">0</h1>
         </div>
         <canvas width="750" height="585" id="game"></canvas>
-        <button class="reset" onclick="reset()"> Play Again </button>
-        <button class="easy" id = 1 onclick="easy()"> Easy </button>
+        <button class="reset" onclick="reset()"> Reset</button>
+        <button class="easy" id = 1 onclick="easy()">   Easy   </button>
         <button class="medium" id = 2 onclick="medium()"> Medium </button>
         <button class="hard" id = 3 onclick="hard()"> Hard </button>
         <script src="script.js"></script>
