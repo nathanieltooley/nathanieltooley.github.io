@@ -131,15 +131,15 @@ function reset() {
   resettingText.style.visibility = "visible";
 
   //Resets ball position when resetting - Taitt Estes
-setTimeout(() => {
-  ball.resetting = false;
-  gameRunning = true;
+  setTimeout(() => {
+    ball.resetting = false;
+    gameRunning = true;
 
-  ball.x = canvas.width / 2;
-  ball.y = canvas.height / 2;
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
 
-  resettingContainer.style.visibility = "hidden";
-  resettingText.style.visibility = "hidden";
+    resettingContainer.style.visibility = "hidden";
+    resettingText.style.visibility = "hidden";
   }, 400);
 }
 
