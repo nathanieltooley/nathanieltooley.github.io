@@ -23,6 +23,16 @@ body {
   align-items: center;
 }
 
+#resettingContainer {
+  position: fixed;
+  flex-direction: column;
+  text-align: center;
+  color: white;
+  background-color: #3e8e41;
+  padding: 2rem;
+  border-radius: 5px;
+}
+
 button {
   font-size: 60px;
   padding: 2rem 4rem;
@@ -119,15 +129,19 @@ button.hard {
   margin: 0 auto;
   text-align: center;
 }
+
 h1 {
   font-size: 20px;
   margin-bottom: auto;
+  font-family: 'Lato', sans-serif;
 }
+
 .button-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 button:hover {
   background-color: #3e8e41;
 }

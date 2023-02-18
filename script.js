@@ -1,5 +1,7 @@
 //starts the game when the start button is clicked and then it disappears
 const startButton = document.getElementById("startButton");
+const resettingContainer = document.getElementById("resettingContainer");
+const resettingText = document.getElementById("resettingText");
 
 const canvas = document.getElementById('game');
 
@@ -16,6 +18,9 @@ var paddleSpeed = 6;
 var ballSpeed = 5;
 
 var gameRunning = false;
+
+resettingContainer.style.visibility = "hidden";
+resettingText.style.visibility = "hidden";
 
 const leftPaddle = {
   // start in the middle of the game on the left side
@@ -122,13 +127,19 @@ function reset() {
 
   gameRunning = false;
 
-  //Resets ball position when resetting - Taitt Estes
-  setTimeout(() => {
-    ball.resetting = false;
-    gameRunning = true;
+  resettingContainer.style.visibility = "visible";
+  resettingText.style.visibility = "visible";
 
-    ball.x = canvas.width / 2;
-    ball.y = canvas.height / 2;
+  //Resets ball position when resetting - Taitt Estes
+setTimeout(() => {
+  ball.resetting = false;
+  gameRunning = true;
+
+  ball.x = canvas.width / 2;
+  ball.y = canvas.height / 2;
+
+  resettingContainer.style.visibility = "hidden";
+  resettingText.style.visibility = "hidden";
   }, 400);
 }
 
