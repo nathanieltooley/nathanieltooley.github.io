@@ -60,7 +60,7 @@ const score = {
 }
 
 const sfxVolume = .5;
-const musicVolume = .4;
+const musicVolume = .3;
 
 let gameMusic = new Audio("./assets/game-aranessa-loop.wav");
 let homeMusic = new Audio("./assets/home-aranessa-loop.wav");
@@ -114,13 +114,22 @@ function reset() {
   writeScoreboard();
 
   ball.resetting = true;
+  leftPaddle.y = canvas.height / 2 - paddleHeight / 2
+  rightPaddle.y = canvas.height / 2 - paddleHeight / 2
+
+  leftPaddle.dy = 0;
+  rightPaddle.dy = 0;
+
+  gameRunning = false;
 
   //Resets ball position when resetting - Taitt Estes
   setTimeout(() => {
     ball.resetting = false;
+    gameRunning = true;
+
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-  }, 0);
+  }, 400);
 }
 
 function writeScoreboard(){
