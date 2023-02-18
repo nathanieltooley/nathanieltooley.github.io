@@ -1,13 +1,6 @@
 //starts the game when the start button is clicked and then it disappears
 const startButton = document.getElementById("startButton");
-startButton.addEventListener("click", () => {
-  // hides welcome screen and makes way to show the canvas
-  const welcomeScreen = document.querySelector(".welcome-screen");
-  const canvas = document.querySelector("canvas");
-  //hides welcome screen while none and displays while block
-  welcomeScreen.style.display = "none";
-  canvas.style.display = "block";
-});
+
 const canvas = document.getElementById('game');
 
 const scoreboard = document.getElementById('scoreboard')
@@ -21,6 +14,8 @@ const maxPaddleY = canvas.height - grid - paddleHeight;
 
 var paddleSpeed = 6;
 var ballSpeed = 5;
+
+var gameRunning = false;
 
 const leftPaddle = {
   // start in the middle of the game on the left side
@@ -84,8 +79,25 @@ homeMusic.autoplay = false;
 homeMusic.loop = true;
 homeMusic.volume = musicVolume;
 
-gameMusic.addEventListener("canplaythrough", (event) => {
-  gameMusic.play()
+startButton.addEventListener("click", () => {
+  // hides welcome screen and makes way to show the canvas
+  const welcomeScreen = document.querySelector(".welcome-screen");
+  const canvas = document.querySelector("canvas");
+  //hides welcome screen while none and displays while block
+  welcomeScreen.style.display = "none";
+  canvas.style.display = "block";
+
+  gameRunning = true;
+
+  if (!homeMusic.paused){
+    homeMusic.pause();
+  }
+  
+  gameMusic.play();
+});
+
+homeMusic.addEventListener("canplaythrough", (event) => {
+  homeMusic.play()
 })
 
 // check for collision between two objects using axis-aligned bounding box (AABB)
@@ -143,9 +155,15 @@ function playHitSound(){
 
 // game loop
 function loop() {
+  requestAnimationFrame(loop);
+
+  if (!gameRunning){
+    return;
+  }
+
   let ballHit = false;
 
-  requestAnimationFrame(loop);
+  
   context.clearRect(0,0,canvas.width,canvas.height);
 
   // move paddles by their  velocity
