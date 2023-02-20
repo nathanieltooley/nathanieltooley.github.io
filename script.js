@@ -14,6 +14,9 @@ const grid = 15;
 const paddleHeight = grid * 5; // 80
 const maxPaddleY = canvas.height - grid - paddleHeight;
 
+const greenRgb = 'rgb(115, 153, 0)'
+const redRgb = 'rgb(255, 77, 77)'
+
 var paddleSpeed = 6;
 var ballSpeed = 5;
 
@@ -142,6 +145,14 @@ function reset() {
     resettingContainer.style.visibility = "hidden";
     resettingText.style.visibility = "hidden";
   }, 400);
+}
+
+function tempSetBg(color, timeout) {
+  document.body.style.background = color;
+
+  setTimeout(() => {
+    document.body.style.background = 'black';
+  }, timeout);
 }
 
 function writeScoreboard(){
@@ -276,12 +287,12 @@ function loop() {
   if ( (ball.x < 0 || ball.x > canvas.width) && !ball.resetting) {
     if (ball.x < 0){
         score.player += 1;
-        document.body.style.background = 'rgb(115, 153, 0)';
+        tempSetBg(greenRgb, 600);
         playerGoal.play();
     }
     if (ball.x > canvas.width) {
         score.opponent += 1;
-        document.body.style.background = 'rgb(255, 77, 77)';
+        tempSetBg(redRgb, 600);
         enemyGoal.play();
     }
     writeScoreboard();
