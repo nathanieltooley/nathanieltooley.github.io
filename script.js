@@ -114,6 +114,7 @@ function collides(obj1, obj2) {
          obj1.y + obj1.height > obj2.y;
 }
 function reset() {
+  document.body.style.background = 'black';
   score.player = 0;
   score.opponent = 0;
   writeScoreboard();
@@ -144,6 +145,7 @@ function reset() {
 }
 
 function writeScoreboard(){
+  
   playerScoreboardText.innerText = score.player.toString();
   opponentScoreboardText.innerHTML = score.opponent.toString();
 }
@@ -151,14 +153,17 @@ function writeScoreboard(){
 //Bot commands - Taitt Estes
 var difficulty = 1;
 function easy(){
+  document.body.style.background = 'black';
   difficulty = 0;
   reset();
 }
 function medium(){
+  document.body.style.background = 'black';
   difficulty = 1;
   reset();
 }
 function hard(){
+  document.body.style.background = 'black';
   difficulty = 2;
   reset();
 }
@@ -176,7 +181,7 @@ function playHitSound(){
 // game loop
 function loop() {
   requestAnimationFrame(loop);
-
+  
   if (!gameRunning){
     return;
   }
@@ -301,10 +306,12 @@ function loop() {
       reset();
     } else {
       if(score.player == 7) {
+        document.body.style.background = 'black';
         document.write("Game Over. \nYou won"); 
       }
       if(score.opponent == 7) {
         // context.fillText("GAME OVER",250,300);
+        document.body.style.background = 'black';
         document.write("Game Over \nYou lost"); 
       }
     }
