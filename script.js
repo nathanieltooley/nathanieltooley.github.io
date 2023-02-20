@@ -176,7 +176,7 @@ function playHitSound(){
 // game loop
 function loop() {
   requestAnimationFrame(loop);
-  
+
   if (!gameRunning){
     return;
   }
