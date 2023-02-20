@@ -1,9 +1,13 @@
+//starts the game when the start button is clicked and then it disappears
+const startButton = document.getElementById("startButton");
+const resettingContainer = document.getElementById("resettingContainer");
+const resettingText = document.getElementById("resettingText");
+
 const canvas = document.getElementById('game');
 
 const scoreboard = document.getElementById('scoreboard')
 const playerScoreboardText = document.getElementById('player-score');
 const opponentScoreboardText = document.getElementById('opponent-score')
-
 
 const context = canvas.getContext('2d');
 const grid = 15;
@@ -12,6 +16,11 @@ const maxPaddleY = canvas.height - grid - paddleHeight;
 
 var paddleSpeed = 6;
 var ballSpeed = 5;
+
+var gameRunning = false;
+
+resettingContainer.style.visibility = "hidden";
+resettingText.style.visibility = "hidden";
 
 const leftPaddle = {
   // start in the middle of the game on the left side
@@ -55,9 +64,8 @@ const score = {
     player: 0
 }
 
-// Audio initalization
 const sfxVolume = .5;
-const musicVolume = .4;
+const musicVolume = .3;
 
 let gameMusic = new Audio("./assets/game-aranessa-loop.wav");
 let homeMusic = new Audio("./assets/home-aranessa-loop.wav");
@@ -76,8 +84,25 @@ homeMusic.autoplay = false;
 homeMusic.loop = true;
 homeMusic.volume = musicVolume;
 
-gameMusic.addEventListener("canplaythrough", (event) => {
-  gameMusic.play()
+startButton.addEventListener("click", () => {
+  // hides welcome screen and makes way to show the canvas
+  const welcomeScreen = document.querySelector(".welcome-screen");
+  const canvas = document.querySelector("canvas");
+  //hides welcome screen while none and displays while block
+  welcomeScreen.style.display = "none";
+  canvas.style.display = "block";
+
+  gameRunning = true;
+
+  if (!homeMusic.paused){
+    homeMusic.pause();
+  }
+  
+  gameMusic.play();
+});
+
+homeMusic.addEventListener("canplaythrough", (event) => {
+  homeMusic.play()
 })
 
 // check for collision between two objects using axis-aligned bounding box (AABB)
@@ -92,11 +117,50 @@ function reset() {
   score.player = 0;
   score.opponent = 0;
   writeScoreboard();
+
+  ball.resetting = true;
+  leftPaddle.y = canvas.height / 2 - paddleHeight / 2
+  rightPaddle.y = canvas.height / 2 - paddleHeight / 2
+
+  leftPaddle.dy = 0;
+  rightPaddle.dy = 0;
+
+  gameRunning = false;
+
+  resettingContainer.style.visibility = "visible";
+  resettingText.style.visibility = "visible";
+
+  //Resets ball position when resetting - Taitt Estes
+  setTimeout(() => {
+    ball.resetting = false;
+    gameRunning = true;
+
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+
+    resettingContainer.style.visibility = "hidden";
+    resettingText.style.visibility = "hidden";
+  }, 400);
 }
 
 function writeScoreboard(){
   playerScoreboardText.innerText = score.player.toString();
   opponentScoreboardText.innerHTML = score.opponent.toString();
+}
+
+//Bot commands - Taitt Estes
+var difficulty = 1;
+function easy(){
+  difficulty = 0;
+  reset();
+}
+function medium(){
+  difficulty = 1;
+  reset();
+}
+function hard(){
+  difficulty = 2;
+  reset();
 }
 
 // I factored this out to a seperate function because sometimes the ball would hit stuff very quickly
@@ -112,17 +176,57 @@ function playHitSound(){
 // game loop
 function loop() {
   requestAnimationFrame(loop);
+  
+  if (!gameRunning){
+    return;
+  }
+
+  let ballHit = false;
+
+  
   context.clearRect(0,0,canvas.width,canvas.height);
+
   // move paddles by their  velocity
   rightPaddle.y += rightPaddle.dy;
   leftPaddle.y += leftPaddle.dy;
 
   //move left paddle by ball's velocity
-  if (ball.dy < 0) {
-    leftPaddle.dy = -paddleSpeed; 
-  }
-  else if (ball.dy >= 0) {
-    leftPaddle.dy = paddleSpeed; 
+  //Switch statement for Bot difficulties - Taitt Estes
+  switch(difficulty){
+    case 0:
+      //Easy(Slight Delay + Chance to Miscalculate)
+      let originalPos = leftPaddle.y;
+      if (ball.dy < 0) {
+        leftPaddle.dy = -paddleSpeed; 
+      }
+      else if (ball.dy > 0) {
+        leftPaddle.dy = paddleSpeed; 
+      }
+      if(Math.random() <= .125){
+        leftPaddle.y = originalPos;
+      }
+      break;
+    case 1:
+      //Medium (Slight Delay, Original Difficulty)
+      if (ball.dy < 0) {
+        leftPaddle.dy = -paddleSpeed; 
+      }
+      else if (ball.dy >= 0) {
+        leftPaddle.dy = paddleSpeed; 
+      }
+      break;
+    case 2:
+      //Hard (NO DELAY *WARNING MAY BE IMPOSSIBLE*)
+      if (leftPaddle.y > ball.y) {
+        leftPaddle.dy = -paddleSpeed; 
+      }
+      else if (leftPaddle.y < ball.y) {
+        leftPaddle.dy = paddleSpeed; 
+      }
+      break;
+    default:
+      //Needed Default Case.
+      break;
   }
 
   // prevent paddles from going through walls
@@ -149,32 +253,30 @@ function loop() {
   ball.x += ball.dx;
   ball.y += ball.dy;
 
-  let ballHits = false;
-
   // prevent ball from going through walls by changing its velocity
   if (ball.y < grid) {
     ball.y = grid;
     ball.dy *= -1;
-    ballHits = true;
+
+    ballHit = true;
   }
   else if (ball.y + grid > canvas.height - grid) {
     ball.y = canvas.height - grid * 2;
     ball.dy *= -1;
-    ballHits = true;
+
+    ballHit = true;
   }
 
   // reset ball if it goes past paddle (but only if we haven't already done so)
   if ( (ball.x < 0 || ball.x > canvas.width) && !ball.resetting) {
-
     if (ball.x < 0){
         score.player += 1;
         document.body.style.background = 'rgb(115, 153, 0)';
-        
         playerGoal.play();
     }
     if (ball.x > canvas.width) {
         score.opponent += 1;
-       document.body.style.background = 'rgb(255, 77, 77)';
+        document.body.style.background = 'rgb(255, 77, 77)';
         enemyGoal.play();
     }
     writeScoreboard();
@@ -198,7 +300,6 @@ function loop() {
     if (confirm(text) == true) {
       reset();
     } else {
-      // context.fillText("GAME OVER",250,300);
       if(score.player == 7) {
         document.write("Game Over. \nYou won"); 
       }
@@ -210,15 +311,6 @@ function loop() {
     resetScore(); 
     writeScoreboard();
   }
-
-  
-  function resetScore() {
-    score.player = 0;
-    score.opponent = 0; 
-  }
-  
- 
-
   // check to see if ball collides with paddle. if they do change x velocity
   if (collides(ball, leftPaddle)) {
     ball.dx *= -1;
@@ -226,7 +318,7 @@ function loop() {
     // move ball next to the paddle otherwise the collision will happen again
     // in the next frame
     ball.x = leftPaddle.x + leftPaddle.width;
-    ballHits = true;
+    ballHit = true;
   }
   else if (collides(ball, rightPaddle)) {
     ball.dx *= -1;
@@ -234,15 +326,15 @@ function loop() {
     // move ball next to the paddle otherwise the collision will happen again
     // in the next frame
     ball.x = rightPaddle.x - ball.width;
-    ballHits = true;
-  }
-
-  if (ballHits) {
-    playHitSound();
+    ballHit = true;
   }
 
   // draw ball
   context.fillRect(ball.x, ball.y, ball.width, ball.height);
+
+  if (ballHit) {
+    playHitSound();
+  }
 
   // draw walls
   context.fillStyle = 'lightgrey';
@@ -287,8 +379,6 @@ document.addEventListener('keyup', function(e) {
     //leftPaddle.dy = 0;
   //}
 });
-
-
 
 // start the game
 requestAnimationFrame(loop);
